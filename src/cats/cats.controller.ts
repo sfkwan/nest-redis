@@ -6,11 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
-import { CacheTTL } from '@nestjs/cache-manager';
+import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('cats')
 export class CatsController {
@@ -22,6 +23,8 @@ export class CatsController {
   }
 
   @Get()
+  @UseInterceptors(CacheInterceptor)
+  // @CacheTTL(20000)
   findAll() {
     return this.catsService.findAll();
   }

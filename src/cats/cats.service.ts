@@ -12,8 +12,11 @@ export class CatsService {
     return 'This action adds a new cat';
   }
 
-  findAll() {
-    return `This action returns all cats`;
+  async findAll() {
+    const date = new Date();
+    console.log(`current datetime: ${date.toISOString()}`);
+
+    return `This action returns all cats ${date.toISOString()}`;
   }
 
   async findOne(id: number): Promise<Cat> {
@@ -23,8 +26,15 @@ export class CatsService {
       console.log(`Getting data from cache! ${JSON.stringify(cachedData)}`);
       return cachedData;
     }
-    const p1 = await new Promise((res) => setTimeout(() => res('p1'), 1000));
-    const comment = { comment: `This action find a #${id} cat` };
+
+    //Simulate slow backend
+    const p1 = await new Promise((res) => setTimeout(() => res('p1'), 10000));
+    const date = new Date();
+
+    const comment = {
+      comment: `This action find a #${id} cat`,
+      date: `${date}`,
+    };
 
     await this.cacheService.set(id.toString(), comment, 60000);
     return comment;

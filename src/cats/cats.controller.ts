@@ -11,7 +11,7 @@ import {
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
-import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @Controller('cats')
 export class CatsController {

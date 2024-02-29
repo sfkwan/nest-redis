@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
-import { CACHE_MANAGER, CacheTTL } from '@nestjs/cache-manager';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { Cat } from './entities/cat.entity';
 
@@ -30,10 +30,11 @@ export class CatsService {
     //Simulate slow backend
     const p1 = await new Promise((res) => setTimeout(() => res('p1'), 10000));
     const date = new Date();
+    console.log(`current datetime: ${date.toISOString()}`);
 
     const comment = {
       comment: `This action find a #${id} cat`,
-      date: `${date}`,
+      date: `${date.toISOString()}`,
     };
 
     await this.cacheService.set(id.toString(), comment, 60000);
